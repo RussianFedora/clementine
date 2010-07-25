@@ -1,0 +1,9 @@
+diff -rupN clementine-0.4.2.old/dist/clementine.desktop clementine-0.4.2/dist/clementine.desktop
+--- clementine-0.4.2.old/dist/clementine.desktop	2010-07-01 14:16:36.000000000 -0400
++++ clementine-0.4.2/dist/clementine.desktop	2010-07-05 14:37:36.000000000 -0400
+@@ -10,4 +10,4 @@ Icon=application-x-clementine
+ Terminal=false
+ Categories=AudioVideo;Player;Qt;
+ StartupNotify=false
+-MimeType=application/ogg;application/x-ogg;application/x-ogm-audio;audio/aac;audio/mp4;audio/mpeg;audio/mpegurl;audio/ogg;audio/vnd.rn-realaudio;audio/vorbis;audio/x-flac;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-oggflac;audio/x-pn-realaudio;audio/x-scpls;audio/x-speex;audio/x-vorbis;audio/x-vorbis+ogg;audio/x-wav;video/x-ms-asf;x-content/audio-player
++MimeType=application/ogg;application/x-ogg;application/x-ogm-audio;audio/aac;audio/mp4;audio/mpeg;audio/mpegurl;audio/ogg;audio/vnd.rn-realaudio;audio/vorbis;audio/x-flac;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-oggflac;audio/x-pn-realaudio;audio/x-scpls;audio/x-speex;audio/x-vorbis;audio/x-vorbis+ogg;audio/x-wav;video/x-ms-asf;x-content/audio-player;
