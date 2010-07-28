@@ -1,6 +1,6 @@
 Name:           clementine
 Version:        0.4.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
@@ -129,6 +129,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Tue Jul 27 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-6
+- Rebuild against new boost on F-14
+
 * Fri Jul 23 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-5
 - Add missing scriptlets
 
