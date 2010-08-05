@@ -1,13 +1,13 @@
 Name:           clementine
 Version:        0.4.2
-Release:        5%{?dist}
+Release:        7%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
 License:        GPLv3+ and GPLv2+
 URL:            http://code.google.com/p/clementine-player
 Source0:        http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# The following patches 0-3 are from the upstream trunk
+# The following patches 0-4 are from the upstream trunk
 # Fix trailing semicolon
 # http://code.google.com/p/clementine-player/source/detail?r=1486
 Patch0:         clementine-desktop-fix.patch
@@ -18,9 +18,8 @@ Patch1:         clementine-system-projectM.patch
 Patch2:         clementine-system-qtsingleapplication.patch
 # http://code.google.com/p/clementine-player/source/detail?r=1445
 Patch3:         clementine-system-qtiocompressor.patch
-# Also split qxt. This is still under discussion with upstream
-# http://code.google.com/p/clementine-player/issues/detail?id=291
-# comments 23 and after
+# Also split qxt. Patch accepted by upstream
+#http://code.google.com/p/clementine-player/source/detail?r=1512
 Patch4:         clementine-system-qxt.patch
 # We need to pass the font paths to the Renderer constructor of libprojectM.
 # Otherwise ftgl library segfaults. Note that this is not a problem if projectM
@@ -28,6 +27,10 @@ Patch4:         clementine-system-qxt.patch
 # details on this at
 # http://code.google.com/p/clementine-player/issues/detail?id=291#c22
 Patch5:         clementine-font-paths.patch
+# Fix lastFM crash RHBZ#618474
+# http://code.google.com/p/clementine-player/issues/detail?id=463
+# From upstream trunk
+Patch6:         clementine-fix-lastfm-crash.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  boost-devel
@@ -64,6 +67,7 @@ advantage of Qt4.
 %patch3 -p1 -b .qtiocompressor
 %patch4 -p1 -b .qxt
 %patch5 -p1 -b .fontpaths
+%patch6 -p1 -b .fix.lastfm.crash
 
 # We already don't use these but just to make sure
 rm -fr 3rdparty/gmock
@@ -129,6 +133,12 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Thu Aug 05 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-7
+- Fix crash on lastfm tree RHBZ#618474
+
+* Tue Jul 27 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-6
+- Rebuild against new boost on F-14
+
 * Fri Jul 23 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-5
 - Add missing scriptlets
 
