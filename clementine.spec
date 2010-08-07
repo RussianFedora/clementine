@@ -1,6 +1,6 @@
 Name:           clementine
 Version:        0.4.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
@@ -31,6 +31,9 @@ Patch5:         clementine-font-paths.patch
 # http://code.google.com/p/clementine-player/issues/detail?id=463
 # From upstream trunk
 Patch6:         clementine-fix-lastfm-crash.patch
+# Enforce Fedora specific optimization flags. Accepted by upstream.
+# http://code.google.com/p/clementine-player/source/detail?r=1639
+Patch7:         clementine-fix-buildfags.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  boost-devel
@@ -68,6 +71,7 @@ advantage of Qt4.
 %patch4 -p1 -b .qxt
 %patch5 -p1 -b .fontpaths
 %patch6 -p1 -b .fix.lastfm.crash
+%patch7 -p1 -b .build.flags
 
 # We already don't use these but just to make sure
 rm -fr 3rdparty/gmock
@@ -133,6 +137,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Fri Aug 06 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-8
+- Enforce Fedora compilation flags
+
 * Thu Aug 05 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-7
 - Fix crash on lastfm tree RHBZ#618474
 
