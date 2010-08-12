@@ -1,6 +1,6 @@
 Name:           clementine
 Version:        0.4.2
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
@@ -34,6 +34,10 @@ Patch6:         clementine-fix-lastfm-crash.patch
 # Enforce Fedora specific optimization flags. Accepted by upstream.
 # http://code.google.com/p/clementine-player/source/detail?r=1639
 Patch7:         clementine-fix-buildfags.patch
+# Only create the OpenGL graphics context when you first open the visualisations
+# window. Fixes RHBZ#621913. From upstream trunk:
+# http://code.google.com/p/clementine-player/source/detail?spec=svn1661&r=1431
+Patch8:         clementine-visualization-init.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  boost-devel
@@ -72,6 +76,7 @@ advantage of Qt4.
 %patch5 -p1 -b .fontpaths
 %patch6 -p1 -b .fix.lastfm.crash
 %patch7 -p1 -b .build.flags
+%patch8 -p1 -b .visual.init
 
 # We already don't use these but just to make sure
 rm -fr 3rdparty/gmock
@@ -137,6 +142,10 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Sun Aug 08 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-9
+- Only create the OpenGL graphics context when you first open the visualisations
+  window. Fixes RHBZ#621913
+
 * Fri Aug 06 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-8
 - Enforce Fedora compilation flags
 
