@@ -1,43 +1,20 @@
 Name:           clementine
-Version:        0.4.2
-Release:        9%{?dist}
+Version:        0.5.2
+Release:        1%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
 License:        GPLv3+ and GPLv2+
 URL:            http://code.google.com/p/clementine-player
 Source0:        http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# The following patches 0-4 are from the upstream trunk
-# Fix trailing semicolon
-# http://code.google.com/p/clementine-player/source/detail?r=1486
-Patch0:         clementine-desktop-fix.patch
-# The next 3 are to split out the bundled libraries
-# http://code.google.com/p/clementine-player/source/detail?r=1443
-Patch1:         clementine-system-projectM.patch
-# http://code.google.com/p/clementine-player/source/detail?r=1444
-Patch2:         clementine-system-qtsingleapplication.patch
-# http://code.google.com/p/clementine-player/source/detail?r=1445
-Patch3:         clementine-system-qtiocompressor.patch
-# Also split qxt. Patch accepted by upstream
-#http://code.google.com/p/clementine-player/source/detail?r=1512
-Patch4:         clementine-system-qxt.patch
-# We need to pass the font paths to the Renderer constructor of libprojectM.
-# Otherwise ftgl library segfaults. Note that this is not a problem if projectM
-# is not compiled with ftgl support. However, the Fedora package is. More
-# details on this at
-# http://code.google.com/p/clementine-player/issues/detail?id=291#c22
-Patch5:         clementine-font-paths.patch
-# Fix lastFM crash RHBZ#618474
-# http://code.google.com/p/clementine-player/issues/detail?id=463
-# From upstream trunk
-Patch6:         clementine-fix-lastfm-crash.patch
-# Enforce Fedora specific optimization flags. Accepted by upstream.
-# http://code.google.com/p/clementine-player/source/detail?r=1639
-Patch7:         clementine-fix-buildfags.patch
-# Only create the OpenGL graphics context when you first open the visualisations
-# window. Fixes RHBZ#621913. From upstream trunk:
-# http://code.google.com/p/clementine-player/source/detail?spec=svn1661&r=1431
-Patch8:         clementine-visualization-init.patch
+# This 3rd party library is not needed on Linux. Patch accepted by upstream
+# http://code.google.com/p/clementine-player/issues/detail?id=798
+Patch0:         clementine-no-qtwin.patch
+# Safeguard against a null pipeline in GstEngine::Play. From upstream trunk
+# Fixes RHBZ#636544
+# http://code.google.com/p/clementine-player/source/detail?r=2063
+Patch1:         clementine-gst-safeguard.patch
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  boost-devel
@@ -46,13 +23,18 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  gstreamer-devel
 BuildRequires:  gtest-devel
+BuildRequires:  libgpod-devel
+BuildRequires:  libimobiledevice-devel
 BuildRequires:  liblastfm-devel
+BuildRequires:  libmtp-devel 
 BuildRequires:  libnotify-devel
+BuildRequires:  libplist-devel 
 BuildRequires:  libprojectM-devel >= 2.0.1-7
 BuildRequires:  libqxt-devel
 BuildRequires:  notification-daemon
 BuildRequires:  qt4-devel
 BuildRequires:  qtiocompressor-devel
+BuildRequires:  qtsinglecoreapplication-devel
 BuildRequires:  qtsingleapplication-devel >= 2.6.1-2
 BuildRequires:  sqlite-devel
 BuildRequires:  taglib-devel
@@ -68,23 +50,14 @@ advantage of Qt4.
 
 %prep
 %setup -q
-%patch0 -p1 -b .desktopfix
-%patch1 -p1 -b .projectM
-%patch2 -p1 -b .qtsingleapplication
-%patch3 -p1 -b .qtiocompressor
-%patch4 -p1 -b .qxt
-%patch5 -p1 -b .fontpaths
-%patch6 -p1 -b .fix.lastfm.crash
-%patch7 -p1 -b .build.flags
-%patch8 -p1 -b .visual.init
+%patch0 -p1 -b .noqtwin
+%patch1 -p1 -b .gstsafeguard
 
-# We already don't use these but just to make sure
-rm -fr 3rdparty/gmock
-rm -fr 3rdparty/libprojectm
-rm -fr 3rdparty/qxt
-rm -fr 3rdparty/qsqlite
-rm -fr 3rdparty/qtiocompressor
-rm -fr 3rdparty/qtsingleapplication
+# Remove all 3rdparty libraries exceph universalchardet
+# as it is not available as a separate library.
+mv 3rdparty/universalchardet/ .
+rm -fr 3rdparty/*
+mv universalchardet/ 3rdparty/
 
 
 # Don't build tests. They require gmock which is not yet available on Fedora
@@ -99,6 +72,7 @@ pushd %{_target_platform}
    -DUSE_SYSTEM_QTSINGLEAPPLICATION=1 \
    -DUSE_SYSTEM_PROJECTM=1 \
    -DUSE_SYSTEM_QXT=1 \
+   -DSTATIC_SQLITE=0 \
    .. 
 
 
@@ -139,9 +113,17 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_bindir}/clementine
 %{_datadir}/applications/clementine.desktop
 %{_datadir}/icons/hicolor/64x64/apps/application-x-clementine.png
+%{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
 
 
 %changelog
+* Sun Sep 26 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.2-1
+- New upstream version
+
+* Wed Sep 22 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.1-1
+- New upstream version
+- Drop all upstreamed patches
+
 * Sun Aug 08 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.4.2-9
 - Only create the OpenGL graphics context when you first open the visualisations
   window. Fixes RHBZ#621913
