@@ -1,5 +1,5 @@
 Name:           clementine
-Version:        0.5.2
+Version:        0.5.3
 Release:        1%{?dist}
 Summary:        A music player and library organizer
 
@@ -117,6 +117,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Wed Sep 29 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.3-1
+- New upstream version
+
 * Sun Sep 26 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.2-1
 - New upstream version
 
