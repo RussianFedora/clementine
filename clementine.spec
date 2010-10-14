@@ -1,6 +1,6 @@
 Name:           clementine
 Version:        0.5.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A music player and library organizer
 
 Group:          Applications/Multimedia
@@ -23,8 +23,10 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  gstreamer-devel
 BuildRequires:  gtest-devel
+%ifnarch s390 s390x
 BuildRequires:  libgpod-devel
 BuildRequires:  libimobiledevice-devel
+%endif
 BuildRequires:  liblastfm-devel
 BuildRequires:  libmtp-devel 
 BuildRequires:  libnotify-devel
@@ -117,6 +119,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Thu Oct 14 2010 Dan Horák <dan[at]danny.cz> - 0.5.3-2
+- Update BRs for s390(x)
+
 * Wed Sep 29 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.3-1
 - New upstream version
 
