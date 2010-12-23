@@ -1,5 +1,5 @@
 Name:           clementine
-Version:        0.5.3
+Version:        0.6
 Release:        1%{?dist}
 Summary:        A music player and library organizer
 
@@ -7,13 +7,6 @@ Group:          Applications/Multimedia
 License:        GPLv3+ and GPLv2+
 URL:            http://code.google.com/p/clementine-player
 Source0:        http://clementine-player.googlecode.com/files/%{name}-%{version}.tar.gz
-# This 3rd party library is not needed on Linux. Patch accepted by upstream
-# http://code.google.com/p/clementine-player/issues/detail?id=798
-Patch0:         clementine-no-qtwin.patch
-# Safeguard against a null pipeline in GstEngine::Play. From upstream trunk
-# Fixes RHBZ#636544
-# http://code.google.com/p/clementine-player/source/detail?r=2063
-Patch1:         clementine-gst-safeguard.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -50,20 +43,6 @@ advantage of Qt4.
 
 %prep
 %setup -q
-%patch0 -p1 -b .noqtwin
-%patch1 -p1 -b .gstsafeguard
-
-# Remove all 3rdparty libraries exceph universalchardet
-# as it is not available as a separate library.
-mv 3rdparty/universalchardet/ .
-rm -fr 3rdparty/*
-mv universalchardet/ 3rdparty/
-
-
-# Don't build tests. They require gmock which is not yet available on Fedora
-# RHBZ #527402
-sed -i '/tests/d' CMakeLists.txt
-
 
 %build
 mkdir -p %{_target_platform}
@@ -114,9 +93,13 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/applications/clementine.desktop
 %{_datadir}/icons/hicolor/64x64/apps/application-x-clementine.png
 %{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
+%{_datadir}/icons/ubuntu-mono-*/apps/*
 
 
 %changelog
+* Mon Dec 13 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 0.6-1
+- update to 0.6
+
 * Wed Sep 29 2010 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 0.5.3-1
 - New upstream version
 
