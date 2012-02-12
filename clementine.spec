@@ -26,9 +26,6 @@ BuildRequires:  gmock-devel
 BuildRequires:  gstreamer-devel
 BuildRequires:  gstreamer-plugins-base-devel
 BuildRequires:  gtest-devel
-%if 0%{fedora} > 16
-BuildRequires:  kdeplasma-addons-devel
-%endif
 BuildRequires:  libcdio-devel
 BuildRequires:  libchromaprint-devel
 BuildRequires:  libechonest-devel
@@ -92,9 +89,6 @@ pushd %{_target_platform}
         -DUSE_SYSTEM_PROJECTM=1 \
         -DUSE_SYSTEM_QXT=1 \
         -DSTATIC_SQLITE=0 \
-%if 0%{fedora} > 16
-        -DENABLE_PLASMARUNNER=1 \
-%endif
         .. 
 
     # Parallel build fails sometimes
@@ -145,7 +139,6 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %changelog
 * Thu Feb 07 2012 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 1.0.1-2
 - Re-add the fresh start patch. Looks like it didn't make it to 1.0.1
-- Include plasma addon only in F-17+
 
 * Thu Feb 02 2012 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 1.0.1-1
 - New upstream release RHBZ#772175
