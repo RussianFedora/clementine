@@ -131,12 +131,11 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/applications/clementine.desktop
 %{_datadir}/icons/hicolor/64x64/apps/application-x-clementine.png
 %{_datadir}/icons/hicolor/scalable/apps/application-x-clementine.svg
-%if 0%{fedora} > 16
-%{_libdir}/kde4/plasma_runner_clementine.so
-%{_datadir}/kde4/services/plasma-runner-clementine.desktop
-%endif
 
 %changelog
+* Sun Feb 12 2012 Arkady L. Shane <ashejn@russianfedora.ru> - 1.0.1-2.R
+- drop f17 conditions
+
 * Thu Feb 07 2012 Orcan Ogetbil <oget[dot]fedora[at]gmail[dot]com> - 1.0.1-2
 - Re-add the fresh start patch. Looks like it didn't make it to 1.0.1
 
