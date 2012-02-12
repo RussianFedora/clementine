@@ -1,0 +1,36 @@
+diff -rupN clementine-1.0.1.old/dist/clementine.desktop clementine-1.0.1/dist/clementine.desktop
+--- clementine-1.0.1.old/dist/clementine.desktop	2011-12-02 16:24:43.000000000 -0500
++++ clementine-1.0.1/dist/clementine.desktop	2012-02-02 20:43:23.167651020 -0500
+@@ -15,27 +15,27 @@ StartupNotify=false
+ MimeType=application/ogg;application/x-ogg;application/x-ogm-audio;audio/aac;audio/mp4;audio/mpeg;audio/mpegurl;audio/ogg;audio/vnd.rn-realaudio;audio/vorbis;audio/x-flac;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-oggflac;audio/x-pn-realaudio;audio/x-scpls;audio/x-speex;audio/x-vorbis;audio/x-vorbis+ogg;audio/x-wav;video/x-ms-asf;x-content/audio-player;
+ X-Ayatana-Desktop-Shortcuts=Play;Pause;Stop;Previous;Next;
+ 
+-[Play Shortcut Group] 
++[X-Play Shortcut Group]
+ Name=Play
+ Exec=clementine --play 
+ TargetEnvironment=Unity
+ 
+-[Pause Shortcut Group] 
++[X-Pause Shortcut Group]
+ Name=Pause
+ Exec=clementine --pause
+ TargetEnvironment=Unity
+ 
+-[Stop Shortcut Group] 
++[X-Stop Shortcut Group]
+ Name=Stop
+ Exec=clementine --stop
+ TargetEnvironment=Unity
+ 
+-[Previous Shortcut Group] 
++[X-Previous Shortcut Group]
+ Name=Previous
+ Exec=clementine --previous
+ TargetEnvironment=Unity
+ 
+-[Next Shortcut Group] 
++[X-Next Shortcut Group]
+ Name=Next
+ Exec=clementine --next
+ TargetEnvironment=Unity
